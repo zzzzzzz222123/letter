@@ -29,16 +29,18 @@
         .container {
             position: relative;
             cursor: pointer;
+            padding-top: 50px; 
         }
 
-        /* Envelope Base */
+   
         .envelope-wrapper {
             position: relative;
             width: 350px;
             height: 230px;
             background-color: var(--envelope-dark);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.5s ease;
+            transition: transform 0.5s ease-in-out; /* Ensured smooth transition here */
+            z-index: 2; /* Increased z-index so the heart/flap stay on top of the moving base */
         }
 
         .envelope {
@@ -46,9 +48,10 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            z-index: 2;
         }
 
-        /* Front Flaps */
+       
         .envelope::before {
             content: "";
             position: absolute;
@@ -59,7 +62,7 @@
             border-left: 175px solid var(--envelope-dark);
         }
 
-        /* Top Flap Animation */
+       
         .top-flap {
             position: absolute;
             top: 0;
@@ -69,11 +72,11 @@
             border-right: 175px solid transparent;
             border-top: 130px solid var(--envelope-dark);
             transform-origin: top;
-            transition: transform 0.4s ease-in-out 0.3s;
+            transition: transform 0.4s ease-in-out 0.3s, z-index 0s step-end 0.3s; /* Smooth step for z-index */
             z-index: 4;
         }
 
-        /* The Heart Seal */
+  
         .heart {
             position: absolute;
             top: 110px;
@@ -99,7 +102,7 @@
         .heart:before { top: -20px; left: 0; }
         .heart:after { left: -20px; top: 0; }
 
-        /* The Letter */
+     
         .letter {
             position: absolute;
             bottom: 5px;
@@ -110,7 +113,7 @@
             padding: 25px;
             box-sizing: border-box;
             transition: transform 0.5s ease-in-out, height 0.5s ease-in-out;
-            z-index: 1;
+            z-index: 1; /* Starts behind the envelope flaps */
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             overflow: hidden;
         }
@@ -139,18 +142,24 @@
             margin-top: 0;
             font-size: 1.8rem;
         }
-
-        /* Open State Styles */
+  
         .container.open .top-flap {
             transform: rotateX(180deg);
-            z-index: 0;
+            z-index: 0; 
         }
 
-        .container.open .letter {
-            transform: translateY(-120px);
-            height: 380px;
-            z-index: 3;
+
+        .container.open .envelope-wrapper {
+            transform: translateY(150px); 
         }
+
+        
+        .container.open .letter {
+            transform: translateY(-180px);
+            height: 380px;
+            z-index: 3; 
+        }
+
 
         .container.open .heart {
             transform: translate(-50%, -150px) rotate(45deg) scale(0.5);
@@ -195,7 +204,7 @@
             </div>
             <div class="heart"></div>
         </div>
-        <div class="hint"></div>
+        
     </div>
 
     <script>
